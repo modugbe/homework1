@@ -1,0 +1,8 @@
+# Load the RDS file
+full_ma_data <- readRDS("data/output/full_ma_data.rds")
+
+# Get the number of observations
+num_observations <- nrow(full_ma_data)
+
+# Print the result
+print(num_observations)
