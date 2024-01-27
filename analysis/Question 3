@@ -1,0 +1,6 @@
+
+plan_count_table <- table(full_ma_data$plan_type, full_ma_data$year)
+
+# Print the table
+print(plan_count_table)
+
