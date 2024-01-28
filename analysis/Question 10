@@ -1,0 +1,3 @@
+Briefly describe your experience working with these data. Tell me one thing you learned and one thing that really aggravated you.
+
+I learned how to synchronise the files between the online repository and the folders on my computer. While I was doing this, the gitignore command aggravated me because it didn't work and then all the data started uploading to git which made git mad and I had to delete the repository and the folders multiple times. It was the most annoying thing until I was struggling to figure out how to get the output on a pdf or on the same file that I can download as a pdf. 
