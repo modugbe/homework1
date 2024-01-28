@@ -2,7 +2,7 @@
 ## Read in enrollment data for january of each year
 #########################################################################
 
-for (y in 2007:2015) {
+for (y in 2010:2015) {
   ## Basic contract/plan information
   ma.path=paste0("data/input/monthly-ma-and-pdp-enrollment-by-cpsc/CPSC_Contract_Info_",y,"_01.csv")
   contract.info=read_csv(ma.path,
