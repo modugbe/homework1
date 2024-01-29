@@ -2,9 +2,11 @@
 if (!require("pacman")) install.packages("pacman")
 pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata)
 
+# Make a subset of 2010-2015
+plan_count <- subset(full_ma_data, year >= 2010 & year <= 2015)
 
 # Remove special needs plans (SNP), employer group plans (eghp), and all "800-series" plans
-filtered_data <- subset(full_ma_data, 
+filtered_data <- subset(plan_count, 
                         !(plan_type %in% c("SNP", "eghp") | grepl("^800", plan_type)))
 
 # Create a table of the count of plans under each plan type in each year

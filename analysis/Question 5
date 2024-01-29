@@ -9,5 +9,5 @@ pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table
 # Merge the contract_service_area + enrollment data (monthly-ma-and-pdp-enrollment)
 # Restrict the data only to contracts that are approved in their respective counties
     # what part of the data indicates that a contract is approved in the county?
-        # Looking at the description in ReadMe file, does this mean that the output contract_service_area is good?
+        # Looking at the description in prof. ReadMe file, does this mean that the output contract_service_area is good?
 
