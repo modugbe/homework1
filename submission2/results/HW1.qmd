@@ -19,19 +19,19 @@ library(dplyr)
 library(kableExtra)
 ```
 
-Question 1
+# Question 1
 ```{r echo=FALSE, display_num_observations, results="asis"}
 # Display the number of observations
 cat("The number of observations in the dataset is ", num_observations, ".\n")
 ```
 
-Question 2
+# Question 2
 ```{r echo=FALSE, display_num_unique_plan_types, results="asis"}
 # Display the number of unique plan types
 cat("The number of unique plan types in the dataset is ", num_unique_plan_types, ".\n")
 ```
 
-Question 3
+# Question 3
 ```{r display_plan_count_table, results="asis", warning=FALSE}
 #| echo: false 
 #| label: tbl-plans 
@@ -42,14 +42,30 @@ kable(plan_count_table, col.names=c("Plan Type", "2010", "2011", "2012", "2013",
     kable_styling(latex_options=c("scale_down"))
 ```
 
-Question 4
-
+# Question 4
 ```{r display_plan_type_year_table, results="asis", warning=FALSE}
 #| echo: false 
-#| label: tbl-plans 
+#| label: tbl-plans2 
 #| tbl-cap: "Plan types by year (without SNP, EGHP, and 800-series)"
 
 # Display the table for plan counts by type and year
-kable(plan.type.year2, col.names=c("Plan Type", "Count 2010", "Count 2011", "Count 2012", "Count 2013", "Count 2014", "Count 2015"), format.args=list(big.mark=","), booktabs = TRUE) %>%
+kable(plan.type.year2, col.names=c("Plan Type", "2010", "2011", "2012", "2013", "2014", "2015"), format.args=list(big.mark=","), booktabs = TRUE) %>%
     kable_styling(latex_options=c("scale_down"))
 ```
+
+# Question 5
+
+# Question 6
+
+# Question 7
+
+# Question 8
+800 series plans are private fee for service plans. 
+
+# Question 9
+Since Medicare recipients receive Part A at no cost to them, a $0 premium for MA means that the beneficiaries do not have to pay an extra monthly premium for what part A already covers in the MA plan. Instead, to receive part B coverage they would still have to pay the part B standard premium. 
+
+# Question 10
+I learned how to determine a code is still running in VS code. I also learned how to synchronise the files between the online repository and the folders on my computer. While I was doing this, the gitignore command aggravated me because it didn't work and then all the data started uploading to git which made git mad and I had to delete the repository and the folders multiple times. It was the most annoying thing until I was struggling to figure out how to get the output on a pdf or on the same file that I can download as a pdf. 
+submission 2 - update
+I figured out how to download as a pdf!
