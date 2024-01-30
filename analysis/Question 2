@@ -1,7 +1,0 @@
-unique_plan_types <- unique(full_ma_data$plan_type)
-
-# Get the number of unique plan types
-num_unique_plan_types <- length(unique_plan_types)
-
-# Print the result
-print(num_unique_plan_types)
