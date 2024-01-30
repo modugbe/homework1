@@ -1,0 +1,91 @@
+##Question 1
+# Load the RDS file
+full_ma_data <- readRDS("data/output/full_ma_data.rds")
+
+# Get the number of observations
+num_observations <- nrow(full_ma_data)
+
+# Print the result
+print(num_observations)
+
+
+##Question 2
+unique_plan_types <- unique(full_ma_data$plan_type)
+
+# Get the number of unique plan types
+num_unique_plan_types <- length(unique_plan_types)
+
+# Print the result
+print(num_unique_plan_types)
+
+##Question 3
+# Make a subset of 2010-2015
+plan_count <- subset(full_ma_data, year >= 2010 & year <= 2015)
+# Make the table with the subset
+plan_count_table <- table(plan_count$plan_type, plan_count$year)
+# Print the table
+print(plan_count_table)
+
+
+##Question 4
+# Preliminaries -----------------------------------------------------------
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata)
+
+# Make a subset of 2010-2015
+plan_count <- subset(full_ma_data, year >= 2010 & year <= 2015) %>%
+    filter (snp == "No" & eghp == "No" &
+        (planid < 800 | planid >= 900))
+
+plan.type.year2 <- plan_count %>% group_by(plan_type, year) %>% count() %>% arrange(year, -n)
+plan.type.year2 <- pivot_wider (plan.type.year2, names_from = "year", values_from ="n", names_prefix="Count ")
+
+
+
+##Question 5
+# Limit dataset to plans with non-missing enrolment data, 
+# graph average number of MA enrolees per county from 2010 to 2015
+
+# Preliminaries -----------------------------------------------------------
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata)
+
+# Merge the contract_service_area + enrollment data (full_ma_data)
+# Restrict the data only to contracts that are approved in their respective counties
+    # what part of the data indicates that a contract is approved in the county?
+        # Looking at the description in prof. ReadMe file, does this mean that the output contract_service_area is good?
+
+
+##Question 6
+
+
+##Question 7
+
+
+##Question 8
+#Why did we drop the '800-series' plan?
+
+#800 series plans are private fee for service plans. 
+
+##Question 9
+#Why do so many plans charge a $0 premium? What does that really mean to a beneficiary?
+
+#Since Medicare recipients receive Part A at no cost to them, a $0 premium for MA means 
+#that the beneficiaries do not have to pay an extra monthly premium for what part A already 
+#covers in the MA plan. Instead, to receive part B coverage they would still have to pay the 
+#part B standard premium. 
+
+##Question 10
+#Briefly describe your experience working with these data. 
+#Tell me one thing you learned and one thing that really aggravated you.
+
+# I learned how to determine a code is still running in VS code. I also learned 
+# how to synchronise the files between the online repository and the folders on my 
+# computer. While I was doing this, the gitignore command aggravated me because it 
+# didn't work and then all the data started uploading to git which made git mad and 
+# I had to delete the repository and the folders multiple times. It was the most annoying 
+# thing until I was struggling to figure out how to get the output on a pdf or on the same 
+# file that I can download as a pdf. 
+
+rm(list=c("full.ma.data", "full_ma_data")) 
+save.image("submission2/results/Hw1_workspace.Rdata")

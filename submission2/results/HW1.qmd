@@ -1,0 +1,55 @@
+---
+title: "Odugbemi_Homework1_Submission2"
+format: 
+   html: 
+     df-print: default
+---
+
+```{r results="hide", echo=FALSE}
+# Load data from .RData file
+load("/Users/moyosoreoluwaodugbemi/Econ 470/Homework1/submission2/results/Hw1_workspace.Rdata")
+```
+
+```{r results="hide", echo=FALSE}
+options(repos = c(CRAN = "https://cran.rstudio.com"))
+install.packages("knitr")
+install.packages("kableExtra")
+library(knitr)
+library(dplyr)
+library(kableExtra)
+```
+
+Question 1
+```{r echo=FALSE, display_num_observations, results="asis"}
+# Display the number of observations
+cat("The number of observations in the dataset is ", num_observations, ".\n")
+```
+
+Question 2
+```{r echo=FALSE, display_num_unique_plan_types, results="asis"}
+# Display the number of unique plan types
+cat("The number of unique plan types in the dataset is ", num_unique_plan_types, ".\n")
+```
+
+Question 3
+```{r display_plan_count_table, results="asis", warning=FALSE}
+#| echo: false 
+#| label: tbl-plans 
+#| tbl-cap: "Plan types by year"
+
+# Display the table for plan counts by year
+kable(plan_count_table, col.names=c("Plan Type", "2010", "2011", "2012", "2013", "2014", "2015"), format.args=list(big.mark=","), booktabs = TRUE) %>%
+    kable_styling(latex_options=c("scale_down"))
+```
+
+Question 4
+
+```{r display_plan_type_year_table, results="asis", warning=FALSE}
+#| echo: false 
+#| label: tbl-plans 
+#| tbl-cap: "Plan types by year (without SNP, EGHP, and 800-series)"
+
+# Display the table for plan counts by type and year
+kable(plan.type.year2, col.names=c("Plan Type", "Count 2010", "Count 2011", "Count 2012", "Count 2013", "Count 2014", "Count 2015"), format.args=list(big.mark=","), booktabs = TRUE) %>%
+    kable_styling(latex_options=c("scale_down"))
+```
