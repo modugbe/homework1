@@ -1,0 +1,13 @@
+
+# Limit dataset to plans with non-missing enrolment data, 
+# graph average number of MA enrolees per county from 2010 to 2015
+
+# Preliminaries -----------------------------------------------------------
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata)
+
+# Merge the contract_service_area + enrollment data (full_ma_data)
+# Restrict the data only to contracts that are approved in their respective counties
+    # what part of the data indicates that a contract is approved in the county?
+        # Looking at the description in prof. ReadMe file, does this mean that the output contract_service_area is good?
+
