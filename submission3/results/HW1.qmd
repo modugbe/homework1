@@ -1,5 +1,7 @@
 ---
-title: "Odugbemi_Homework1_Submission3: https://github.com/modugbe/homework1"
+title: "Homework1 Submission3"
+author: "Moyo Odugbemi"
+subtitle: "https://github.com/modugbe/homework1"
 format: 
    pdf: 
      df-print: default
@@ -62,19 +64,47 @@ kable(plan.type.year2, col.names=c("Plan Type", "2010", "2011", "2012", "2013", 
     kable_styling(latex_options=c("scale_down"))
 ```
 
+\newpage
 # Question 5
+See @fig-enroll
+```{r}
+#| echo: false
+#| label: fig-enroll
+#| fig-cap: "Average Enrollment"
 
+fig.avg.enrollment
+```
+
+\newpage
 # Question 6
+See @fig-premium
+```{r}
+#| echo: false
+#| label: fig-premium
+#| fig-cap: "Average Premiums"
 
+fig.avg.premium
+```
+
+\newpage
 # Question 7
+See @fig-zero
+```{r}
+#| echo: false
+#| label: fig-zero
+#| fig-cap: "Share of 0 premium plans"
+
+fig.percent.zero
+```
 
 # Question 8
-800 series plans are private fee for service plans. 
+800 series plans are private fee for service plans that aren't available to the average person. Including these plans in the analysis would not reflect the average enrollee's experience in the MA program. 
 
 # Question 9
 Since Medicare recipients receive Part A at no cost to them, a $0 premium for MA means that the beneficiaries do not have to pay an extra monthly premium for what part A already covers in the MA plan. Instead, to receive part B coverage they would still have to pay the part B standard premium. 
 
 # Question 10
-I learned how to determine a code is still running in VS code. I also learned how to synchronise the files between the online repository and the folders on my computer. While I was doing this, the gitignore command aggravated me because it didn't work and then all the data started uploading to git which made git mad and I had to delete the repository and the folders multiple times. It was the most annoying thing until I was struggling to figure out how to get the output on a pdf or on the same file that I can download as a pdf. 
+I learned how to determine a code is still running in VS code. I also learned how to synchronise the files between the online repository and the folders on my computer. While I was doing this, the gitignore command aggravated me because it didn't work and then all the data started uploading to git which made git mad and I had to delete the repository and the folders multiple times. It was the most annoying thing until I was struggling to figure out how to get the output on a pdf or on the same file that I can download as a pdf. <br> 
 submission 2 - update
-I figured out how to download as a pdf!
+I figured out how to download as a pdf! <br> 
+

@@ -1,3 +1,1 @@
-Hopefully this works
-
-I stopped at running contract service for number 5
+A repository for homework 1 in Econ 470

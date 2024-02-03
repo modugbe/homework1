@@ -1,23 +1,31 @@
+
+# Preliminaries -----------------------------------------------------------
+if (!require("pacman")) install.packages("pacman")
+pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata, scales)
+
+
 ##Question 1
 # Load the RDS file
 full_ma_data <- readRDS("data/output/full_ma_data.rds")
-
-# Get the number of observations
 # Need to do this for 2010-2015
-num_observations <- nrow(full_ma_data)
+full.ma.data <- subset(full_ma_data, year >= 2010 & year <=2015)
+# Get the number of observations
+
+num_observations <- nrow(full.ma.data)
 
 # Print the result
 print(num_observations)
 
 
 ##Question 2
-unique_plan_types <- unique(full_ma_data$plan_type)
+unique_plan_types <- unique(full.ma.data$plan_type)
 
 # Get the number of unique plan types
 num_unique_plan_types <- length(unique_plan_types)
 
 # Print the result
 print(num_unique_plan_types)
+
 
 ##Question 3
 # Make a subset of 2010-2015
@@ -43,50 +51,75 @@ plan.type.year2 <- pivot_wider (plan.type.year2, names_from = "year", values_fro
 
 
 
-##Question 5
-# Limit dataset to plans with non-missing enrolment data, 
-# graph average number of MA enrolees per county from 2010 to 2015
+#Question 5-7
+final.plans <- full.ma.data %>%
+  filter(snp == "No" & eghp == "No" &
+           (planid < 800 | planid >= 900))
 
-# Preliminaries -----------------------------------------------------------
-if (!require("pacman")) install.packages("pacman")
-pacman::p_load(tidyverse, ggplot2, dplyr, lubridate, stringr, readxl, data.table, gdata)
+contract.service.area <- readRDS('data/output/contract_service_area.rds')
+final.data <- final.plans %>%
+  inner_join(contract.service.area %>% 
+               select(contractid, fips, year), 
+             by=c("contractid", "fips", "year")) %>%
+  filter(!is.na(avg_enrollment))
 
-# Merge the contract_service_area + enrollment data (full_ma_data)
-# Restrict the data only to contracts that are approved in their respective counties
-    # what part of the data indicates that a contract is approved in the county?
-        # Looking at the description in prof. ReadMe file, does this mean that the output contract_service_area is good?
+ma.penetration.data <- readRDS('data/output/ma_penetration.rds')
+  final.data.pen <- final.data %>%
+  left_join( ma.penetration.data %>% ungroup() %>%
+               rename(state_long=state, county_long=county), 
+             by=c("fips", "year"))
+
+final.state <- final.data.pen %>% 
+  group_by(state) %>% 
+  summarize(state_name=last(state_long, na.rm=TRUE))
+
+final.data.pen <- final.data.pen %>%
+  left_join(final.state,
+            by=c("state"))
+
+plan.premiums <- readRDS('data/output/plan_premiums.rds')
+prem.data <- final.data.pen %>%
+  left_join( plan.premiums,
+             by=c("contractid","planid","state_name"="state","county","year"))
 
 
-##Question 6
+fig.avg.enrollment <- final.data %>%
+  group_by(fips, year) %>% 
+  select(fips, year, avg_enrollment) %>% 
+  summarize(all_enroll=sum(avg_enrollment)) %>%
+  ggplot(aes(x=as.factor(year),y=all_enroll)) + 
+  stat_summary(fun.y="mean", geom="bar") +
+  labs(
+    x="Year",
+    y="People",
+    title=""
+  ) + scale_y_continuous(labels=comma) +
+  theme_bw()
+
+fig.avg.premium <- prem.data %>% ungroup() %>% group_by(year) %>%
+  ggplot(aes(x=as.factor(year),y=premium, group=1)) + 
+  stat_summary(fun.y="mean", geom="line", na.rm=TRUE) +
+  labs(
+    x="Year",
+    y="Premium",
+    title=""
+  ) + scale_y_continuous(labels=comma) +
+  theme_bw()
+
+fig.percent.zero <- prem.data %>% ungroup() %>%
+  mutate(prem_0=(premium==0),
+         prem_na=(is.na(premium))) %>%
+  group_by(year) %>%
+  summarize(all_count=n(),prem_0=sum(prem_0, na.rm=TRUE), prem_na=sum(prem_na)) %>%
+  mutate(perc_0=prem_0/all_count) %>%
+  ggplot(aes(x=as.factor(year), y=perc_0, group=1)) + geom_line() +
+  labs(
+    x="Year",
+    y="Percent",
+    title=""
+  ) + scale_y_continuous(labels=percent) +
+  theme_bw()
 
 
-##Question 7
-
-
-##Question 8
-#Why did we drop the '800-series' plan?
-
-#800 series plans are private fee for service plans. 
-
-##Question 9
-#Why do so many plans charge a $0 premium? What does that really mean to a beneficiary?
-
-#Since Medicare recipients receive Part A at no cost to them, a $0 premium for MA means 
-#that the beneficiaries do not have to pay an extra monthly premium for what part A already 
-#covers in the MA plan. Instead, to receive part B coverage they would still have to pay the 
-#part B standard premium. 
-
-##Question 10
-#Briefly describe your experience working with these data. 
-#Tell me one thing you learned and one thing that really aggravated you.
-
-# I learned how to determine a code is still running in VS code. I also learned 
-# how to synchronise the files between the online repository and the folders on my 
-# computer. While I was doing this, the gitignore command aggravated me because it 
-# didn't work and then all the data started uploading to git which made git mad and 
-# I had to delete the repository and the folders multiple times. It was the most annoying 
-# thing until I was struggling to figure out how to get the output on a pdf or on the same 
-# file that I can download as a pdf. 
-
-rm(list=c("full.ma.data", "full_ma_data")) 
+rm(list=c("full.ma.data", "full_ma_data", "contract.service.area", "ma.penetration.data", "plan.premiums", "final.plans","final.data.pen", "final.state","prem.data","final.data"))
 save.image("submission2/results/Hw1_workspace.Rdata")
